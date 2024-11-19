@@ -1,9 +1,9 @@
-const router = require('express').router();
+const router = require('express').Router();
 const { User } = require('../models');
 const withAuth = require('../utils/auth');
 
 // This will prevent a user who ISNT logged in from viewing homepage.
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll({
             attributes: { exclude: ['password'] },
