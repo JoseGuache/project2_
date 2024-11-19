@@ -1,38 +1,36 @@
-<div class="container">
-  <h1 class="text-center mb-4">Welcome to Expense Tracker</h1>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <h1 class="text-3xl font-bold text-center text-gray-900 mb-8">Welcome to Expense Tracker</h1>
   
   {{#if logged_in}}
-  <div class="row">
-    <div class="col-md-8 mx-auto">
-      <div class="card">
-        <div class="card-header">
-          <h3>Your Recent Expenses</h3>
+  <div class="flex justify-center">
+    <div class="w-full max-w-3xl">
+      <div class="bg-white shadow-md rounded-lg">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-gray-900">Your Recent Expenses</h3>
         </div>
-        <div class="card-body">
+        <div class="px-6 py-4">
           {{#if expenses.length}}
             {{#each expenses as |expense|}}
-              <div class="expense-item mb-2 p-2 border-bottom">
-                <h4>{{expense.description}}</h4>
-                <p>Amount: ${{expense.amount}}</p>
-                <p class="text-muted">Date: {{format_date expense.date}}</p>
+              <div class="border-b border-gray-200 last:border-0 py-4">
+                <h4 class="text-lg font-medium text-gray-900">{{expense.description}}</h4>
+                <p class="text-gray-700">Amount: ${{expense.amount}}</p>
+                <p class="text-sm text-gray-500">Date: {{format_date expense.date}}</p>
               </div>
             {{/each}}
           {{else}}
-            <p>No expenses recorded yet. Start tracking your expenses!</p>
+            <p class="text-gray-600">No expenses recorded yet. Start tracking your expenses!</p>
           {{/if}}
         </div>
       </div>
     </div>
   </div>
   {{else}}
-  <div class="row">
-    <div class="col-md-8 mx-auto text-center">
-      <h2>Track Your Expenses Easily</h2>
-      <p class="lead">Sign up or login to start managing your expenses!</p>
-      <div class="mt-4">
-        <a href="/login" class="btn btn-primary me-2">Login</a>
-        <a href="/signup" class="btn btn-success">Sign Up</a>
-      </div>
+  <div class="text-center">
+    <h2 class="text-2xl font-semibold text-gray-900 mb-4">Track Your Expenses Easily</h2>
+    <p class="text-xl text-gray-600 mb-8">Sign up or login to start managing your expenses!</p>
+    <div class="space-x-4">
+      <a href="/login" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">Login</a>
+      <a href="/signup" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded">Sign Up</a>
     </div>
   </div>
   {{/if}}
