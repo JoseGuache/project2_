@@ -21,10 +21,18 @@ router.get('/', withAuth, async (req, res) => {
 
         // Calculate total income
         const totalIncome = incomes.reduce((sum, income) => sum + parseFloat(income.amount), 0);
+        
+        // For now, set totalExpenses to 0 since we haven't implemented expenses yet
+        const totalExpenses = 0;
+        
+        // Calculate total balance (income - expenses)
+        const totalBalance = totalIncome - totalExpenses;
 
         res.render('homepage', {
             ...user,
             totalIncome: totalIncome.toFixed(2),
+            totalExpenses: totalExpenses.toFixed(2),
+            totalBalance: totalBalance.toFixed(2),
             incomes,
             logged_in: true,
             isDashboard: true
