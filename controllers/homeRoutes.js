@@ -2,24 +2,18 @@ const router = require('express').Router();
 const { User } = require('../models');
 const withAuth = require('../utils/auth');
 
-// This will prevent a user who ISNT logged in from viewing homepage.
-router.get('/', async (req, res) => {
+// Add withAuth middleware to protect the homepage route
+router.get('/', withAuth, async (req, res) => {
     try {
-        if (req.session.logged_in) {
-            const userData = await User.findByPk(req.session.user_id, {
-                attributes: { exclude: ['password'] }
-            });
-            const user = userData.get({ plain: true });
-
-            res.render('homepage', {
-                ...user,
-                logged_in: true
-            });
-            return;
-        }
+        const userData = await User.findByPk(req.session.user_id, {
+            attributes: { exclude: ['password'] }
+        });
+        const user = userData.get({ plain: true });
 
         res.render('homepage', {
-            logged_in: false
+            ...user,
+            logged_in: true,
+            isDashboard: true // For active nav state
         });
     } catch (err) {
         console.error('Error:', err);
@@ -28,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    // If a session exists. redirect the request to the homepage
+    // If already logged in, redirect to homepage
     if (req.session.logged_in) {
         res.redirect('/');
         return;
@@ -38,7 +32,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-    // If the user is already logged in, redirect the request to another route
+    // If already logged in, redirect to homepage
     if (req.session.logged_in) {
         res.redirect('/');
         return;
