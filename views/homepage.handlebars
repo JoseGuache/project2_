@@ -13,15 +13,15 @@
     <div class="grid grid-cols-3 gap-6">
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Income</h3>
-        <p class="text-2xl font-semibold text-gray-800">$ 16500</p>
+        <p class="text-2xl font-semibold text-gray-800">$ {{totalIncome}}</p>
       </div>
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Expenses</h3>
-        <p class="text-2xl font-semibold text-gray-800">$ 3920</p>
+        <p class="text-2xl font-semibold text-gray-800">$ {{totalExpenses}}</p>
       </div>
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Balance</h3>
-        <p class="text-2xl font-semibold text-green-500">$ 12580</p>
+        <p class="text-2xl font-semibold text-green-500">$ {{totalBalance}}</p>
       </div>
     </div>
   </div>
@@ -31,18 +31,16 @@
     <div class="bg-white rounded-2xl p-6 shadow-sm">
       <h2 class="text-gray-800 text-xl font-semibold">Recent History</h2>
       <div class="mt-4 space-y-1">
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-700">Dentist Appointment</span>
-          <span class="text-red-500">-$120</span>
-        </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-700">Travelling</span>
-          <span class="text-red-500">-$3000</span>
-        </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-700">From Freelance</span>
-          <span class="text-green-500">+$1300</span>
-        </div>
+        {{#if incomes.length}}
+          {{#each incomes as |income|}}
+            <div class="flex justify-between py-3 border-b border-gray-100">
+              <span class="text-gray-700">{{income.name}}</span>
+              <span class="text-green-500">+${{income.amount}}</span>
+            </div>
+          {{/each}}
+        {{else}}
+          <p class="text-gray-500">No recent transactions</p>
+        {{/if}}
       </div>
 
       <div class="mt-6">
