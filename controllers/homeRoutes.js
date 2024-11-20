@@ -1,25 +1,33 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Income } = require('../models');
 const withAuth = require('../utils/auth');
 
 // This will prevent a user who ISNT logged in from viewing homepage.
 router.get('/', async (req, res) => {
     try {
-        if (req.session.logged_in) {
-            const userData = await User.findByPk(req.session.user_id, {
-                attributes: { exclude: ['password'] }
-            });
-            const user = userData.get({ plain: true });
+        const userData = await User.findByPk(req.session.user_id, {
+            attributes: { exclude: ['password'] }
+        });
 
-            res.render('homepage', {
-                ...user,
-                logged_in: true
-            });
-            return;
-        }
+        // Get all incomes for the user
+        const incomeData = await Income.findAll({
+            where: {
+                user_id: req.session.user_id
+            }
+        });
+
+        const user = userData.get({ plain: true });
+        const incomes = incomeData.map(income => income.get({ plain: true }));
+
+        // Calculate total income
+        const totalIncome = incomes.reduce((sum, income) => sum + parseFloat(income.amount), 0);
 
         res.render('homepage', {
-            logged_in: false
+            ...user,
+            totalIncome: totalIncome.toFixed(2),
+            incomes,
+            logged_in: true,
+            isDashboard: true
         });
     } catch (err) {
         console.error('Error:', err);
@@ -45,6 +53,17 @@ router.get('/signup', (req, res) => {
     }
 
     res.render('signup');
+});
+
+router.get('/income', withAuth, async (req, res) => {
+  try {
+    res.render('income', {
+      logged_in: true,
+      isIncome: true // For active nav state
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
