@@ -1,46 +1,42 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const ctx = document.getElementById('transactionChart').getContext('2d');
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    // Fetch income data
+    const incomeResponse = await fetch('/api/income');
+    const incomeData = await incomeResponse.json();
 
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['25/02/2023', '21/02/2023', '18/01/2023', '28/01/2023'],
-      datasets: [{
-        label: 'Income',
-        data: [1500, 8000, 1200, 6000],
-        borderColor: '#48bb78',
-        tension: 0.4,
-        fill: false
+    // Process data for the chart
+    const dates = incomeData.map(income => new Date(income.date).toLocaleDateString());
+    const amounts = incomeData.map(income => income.amount);
+
+    // Create the chart
+    const ctx = document.getElementById('transactionChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Income',
+          data: amounts,
+          borderColor: 'rgb(34, 197, 94)',
+          tension: 0.1
+        }]
       },
-      {
-        label: 'Expenses',
-        data: [300, 3000, 800, 0],
-        borderColor: '#e53e3e',
-        tension: 0.4,
-        fill: false
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            color: '#edf2f7'
-          }
-        },
-        x: {
-          grid: {
-            color: '#edf2f7'
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$ ' + value;
+              }
+            }
           }
         }
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }); 

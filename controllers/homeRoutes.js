@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Income } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Add withAuth middleware to protect the homepage route
@@ -8,12 +8,26 @@ router.get('/', withAuth, async (req, res) => {
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] }
         });
+
+        // Get all incomes for the user
+        const incomeData = await Income.findAll({
+            where: {
+                user_id: req.session.user_id
+            }
+        });
+
         const user = userData.get({ plain: true });
+        const incomes = incomeData.map(income => income.get({ plain: true }));
+
+        // Calculate total income
+        const totalIncome = incomes.reduce((sum, income) => sum + parseFloat(income.amount), 0);
 
         res.render('homepage', {
             ...user,
+            totalIncome: totalIncome.toFixed(2),
+            incomes,
             logged_in: true,
-            isDashboard: true // For active nav state
+            isDashboard: true
         });
     } catch (err) {
         console.error('Error:', err);
@@ -39,6 +53,17 @@ router.get('/signup', (req, res) => {
     }
 
     res.render('signup');
+});
+
+router.get('/income', withAuth, async (req, res) => {
+  try {
+    res.render('income', {
+      logged_in: true,
+      isIncome: true // For active nav state
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
