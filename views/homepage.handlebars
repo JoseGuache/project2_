@@ -1,39 +1,68 @@
-<div class="container">
-  <h1 class="text-center mb-4">Welcome to Expense Tracker</h1>
-  
-  {{#if logged_in}}
-  <div class="row">
-    <div class="col-md-8 mx-auto">
-      <div class="card">
-        <div class="card-header">
-          <h3>Your Recent Expenses</h3>
+<div class="flex gap-6 p-6 bg-gray-50 min-h-screen">
+  <!-- Main Dashboard Area -->
+  <div class="flex-1 flex flex-col gap-6">
+    <!-- Graph Card -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm h-[400px]">
+      <h2 class="text-gray-800 text-xl font-semibold">All Transactions</h2>
+      <div class="h-[300px] mt-4">
+        <canvas id="transactionChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-sm">
+        <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Income</h3>
+        <p class="text-2xl font-semibold text-gray-800">$ 16500</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm">
+        <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Expenses</h3>
+        <p class="text-2xl font-semibold text-gray-800">$ 3920</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm">
+        <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Balance</h3>
+        <p class="text-2xl font-semibold text-green-500">$ 12580</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="w-[300px]">
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <h2 class="text-gray-800 text-xl font-semibold">Recent History</h2>
+      <div class="mt-4 space-y-1">
+        <div class="flex justify-between py-3 border-b border-gray-100">
+          <span class="text-gray-700">Dentist Appointment</span>
+          <span class="text-red-500">-$120</span>
         </div>
-        <div class="card-body">
-          {{#if expenses.length}}
-            {{#each expenses as |expense|}}
-              <div class="expense-item mb-2 p-2 border-bottom">
-                <h4>{{expense.description}}</h4>
-                <p>Amount: ${{expense.amount}}</p>
-                <p class="text-muted">Date: {{format_date expense.date}}</p>
-              </div>
-            {{/each}}
-          {{else}}
-            <p>No expenses recorded yet. Start tracking your expenses!</p>
-          {{/if}}
+        <div class="flex justify-between py-3 border-b border-gray-100">
+          <span class="text-gray-700">Travelling</span>
+          <span class="text-red-500">-$3000</span>
+        </div>
+        <div class="flex justify-between py-3 border-b border-gray-100">
+          <span class="text-gray-700">From Freelance</span>
+          <span class="text-green-500">+$1300</span>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="text-gray-600 text-sm font-semibold mb-2">Salary</h3>
+        <div class="flex justify-between text-sm text-gray-500">
+          <span>Min $1200</span>
+          <span>Max $8000</span>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="text-gray-600 text-sm font-semibold mb-2">Expense</h3>
+        <div class="flex justify-between text-sm text-gray-500">
+          <span>Min $120</span>
+          <span>Max $3000</span>
         </div>
       </div>
     </div>
   </div>
-  {{else}}
-  <div class="row">
-    <div class="col-md-8 mx-auto text-center">
-      <h2>Track Your Expenses Easily</h2>
-      <p class="lead">Sign up or login to start managing your expenses!</p>
-      <div class="mt-4">
-        <a href="/login" class="btn btn-primary me-2">Login</a>
-        <a href="/signup" class="btn btn-success">Sign Up</a>
-      </div>
-    </div>
-  </div>
-  {{/if}}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/dashboard.js"></script>
