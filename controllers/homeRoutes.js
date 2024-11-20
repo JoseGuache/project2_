@@ -5,17 +5,21 @@ const withAuth = require('../utils/auth');
 // This will prevent a user who ISNT logged in from viewing homepage.
 router.get('/', async (req, res) => {
     try {
-        const userData = await User.findAll({
-            attributes: { exclude: ['password'] },
-            order: [['username', 'ASC']],
-        });
+        if (req.session.logged_in) {
+            const userData = await User.findByPk(req.session.user_id, {
+                attributes: { exclude: ['password'] }
+            });
+            const user = userData.get({ plain: true });
 
-        const users = userData.map((project) => project.get({ plain: true }));
+            res.render('homepage', {
+                ...user,
+                logged_in: true
+            });
+            return;
+        }
 
         res.render('homepage', {
-            users,
-            // Pass the logged in flag to template
-            logged_in: req.session.logged_in,
+            logged_in: false
         });
     } catch (err) {
         console.error('Error:', err);
