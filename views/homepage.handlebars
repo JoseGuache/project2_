@@ -21,7 +21,9 @@
       </div>
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Balance</h3>
-        <p class="text-2xl font-semibold text-green-500">$ {{totalBalance}}</p>
+        <p class="text-2xl font-semibold {{#if (lt totalBalance 0)}}text-red-500{{else}}text-green-500{{/if}}">
+          $ {{totalBalance}}
+        </p>
       </div>
     </div>
   </div>
@@ -41,22 +43,6 @@
         {{else}}
           <p class="text-gray-500">No recent transactions</p>
         {{/if}}
-      </div>
-
-      <div class="mt-6">
-        <h3 class="text-gray-600 text-sm font-semibold mb-2">Salary</h3>
-        <div class="flex justify-between text-sm text-gray-500">
-          <span>Min $1200</span>
-          <span>Max $8000</span>
-        </div>
-      </div>
-
-      <div class="mt-6">
-        <h3 class="text-gray-600 text-sm font-semibold mb-2">Expense</h3>
-        <div class="flex justify-between text-sm text-gray-500">
-          <span>Min $120</span>
-          <span>Max $3000</span>
-        </div>
       </div>
     </div>
   </div>

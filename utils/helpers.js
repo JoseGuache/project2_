@@ -11,6 +11,9 @@ module.exports = {
   eq: (a, b) => {
     return a === b;
   },
+  lt: (a, b) => {
+    return parseFloat(a) < parseFloat(b);
+  },
   format_amount: (amount) => {
     return parseInt(amount).toLocaleString();
   }
