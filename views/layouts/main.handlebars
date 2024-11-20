@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 h-full flex flex-col">
   {{#if logged_in}}
   <!-- Left Sidebar -->
   <div class="fixed left-0 top-0 w-[280px] h-screen bg-[#f8f7fa] flex flex-col">
@@ -58,9 +58,16 @@
   </div>
   {{/if}}
 
-  <main class="{{#if logged_in}}ml-[280px]{{/if}} min-h-screen">
+  <main class="{{#if logged_in}}ml-[280px]{{/if}} flex-1">
     {{{ body }}}
   </main>
+
+  <!-- Footer -->
+  <footer class="{{#if logged_in}}ml-[280px]{{/if}} bg-gray-800 text-white py-4 mt-auto">
+    <div class="container mx-auto text-center">
+      <p>&copy; {{getCurrentYear}} Tangerine Group. All rights reserved.</p>
+    </div>
+  </footer>
 
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
