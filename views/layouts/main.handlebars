@@ -1,1 +1,77 @@
-{{!-- Name can change, just an example to help w structure. --}}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-gray-50 h-full flex flex-col">
+  {{#if logged_in}}
+  <!-- Left Sidebar -->
+  <div class="fixed left-0 top-0 w-[280px] h-screen bg-[#f8f7fa] flex flex-col">
+    <div class="px-6 py-6 flex items-center gap-3">
+      <div
+        class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xl font-semibold">
+        {{firstChar username}}
+      </div>
+      <div>
+        <h3 class="text-gray-800 font-semibold">{{username}}</h3>
+        <p class="text-gray-500 text-sm">Your Money</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 flex flex-col gap-1">
+      <a href="/"
+        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isDashboard}}bg-[#f0eef6] text-indigo-600{{/if}}">
+        <i class="fas fa-chart-line w-5 text-center"></i>
+        <span class="text-sm">Dashboard</span>
+      </a>
+      <a href="/transactions"
+        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isTransactions}}bg-[#f0eef6] text-indigo-600{{/if}}">
+        <i class="fas fa-list w-5 text-center"></i>
+        <span class="text-sm">View Transactions</span>
+      </a>
+      <a href="/income"
+        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isIncome}}bg-[#f0eef6] text-indigo-600{{/if}}">
+        <i class="fas fa-dollar-sign w-5 text-center"></i>
+        <span class="text-sm">Incomes</span>
+      </a>
+      <a href="/expenses"
+        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isExpenses}}bg-[#f0eef6] text-indigo-600{{/if}}">
+        <i class="fas fa-receipt w-5 text-center"></i>
+        <span class="text-sm">Expenses</span>
+      </a>
+    </nav>
+
+    <div class="border-t border-gray-200 pt-4">
+      <button id="logout"
+        class="w-full flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors">
+        <i class="fas fa-sign-out-alt w-5 text-center"></i>
+        <span class="text-sm">Sign Out</span>
+      </button>
+    </div>
+  </div>
+  {{/if}}
+
+  <main class="{{#if logged_in}}ml-[280px]{{/if}} flex-1">
+    {{{ body }}}
+  </main>
+
+  <!-- Footer -->
+  <footer class="{{#if logged_in}}ml-[280px]{{/if}} bg-gray-800 text-white py-4 mt-auto">
+    <div class="container mx-auto text-center">
+      <p>&copy; {{getCurrentYear}} Tangerine Group. All rights reserved.</p>
+    </div>
+  </footer>
+
+  {{#if logged_in}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
+</body>
+
+</html>
