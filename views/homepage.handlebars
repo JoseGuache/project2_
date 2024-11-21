@@ -46,7 +46,16 @@
               <span class="text-green-500">+${{income.amount}}</span>
             </div>
           {{/each}}
-        {{else}}
+        {{/if}}
+        {{#if expenses.length}}
+          {{#each expenses as |expense|}}
+            <div class="flex justify-between py-3 border-b border-gray-100">
+              <span class="text-gray-700">{{expense.name}}</span>
+              <span class="text-red-500">-${{expense.amount}}</span>
+            </div>
+          {{/each}}
+        {{/if}}
+        {{#if noTransactions}}
           <p class="text-gray-500">No recent transactions</p>
         {{/if}}
       </div>
