@@ -1,58 +1,58 @@
-<div class="flex gap-6 p-6 bg-gray-50">
+<div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 bg-gray-50">
   <!-- Main Dashboard Area -->
   <div class="flex-1 flex flex-col gap-6">
     <!-- Title Section -->
     <div class="text-center mb-4">
-      <h1 class="text-4xl font-bold text-indigo-600">Expense Tracker</h1>
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-600">Expense Tracker</h1>
       <p class="text-gray-600 mt-2">Track your finances with ease</p>
     </div>
 
     <!-- Graph Card -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm h-[400px]">
-      <h2 class="text-gray-800 text-xl font-semibold">All Transactions</h2>
-      <div class="h-[300px] mt-4">
+    <div class="bg-white rounded-2xl p-4 md:p-6 shadow-sm h-[300px] md:h-[400px]">
+      <h2 class="text-gray-800 text-lg md:text-xl font-semibold">All Transactions</h2>
+      <div class="h-[250px] md:h-[300px] mt-4">
         <canvas id="transactionChart"></canvas>
       </div>
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-3 gap-6">
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div class="bg-white rounded-2xl p-4 md:p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Income</h3>
-        <p class="text-2xl font-semibold text-gray-800">$ {{totalIncome}}</p>
+        <p class="text-xl md:text-2xl font-semibold text-gray-800">$ {{totalIncome}}</p>
       </div>
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <div class="bg-white rounded-2xl p-4 md:p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Expenses</h3>
-        <p class="text-2xl font-semibold text-gray-800">$ {{totalExpenses}}</p>
+        <p class="text-xl md:text-2xl font-semibold text-gray-800">$ {{totalExpenses}}</p>
       </div>
-      <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <div class="bg-white rounded-2xl p-4 md:p-6 shadow-sm">
         <h3 class="text-gray-600 text-sm font-semibold mb-2">Total Balance</h3>
-        <p class="text-2xl font-semibold {{#if (lt totalBalance 0)}}text-red-500{{else}}text-green-500{{/if}}">
+        <p class="text-xl md:text-2xl font-semibold {{#if (lt totalBalance 0)}}text-red-500{{else}}text-green-500{{/if}}">
           $ {{totalBalance}}
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Right Sidebar -->
-  <div class="w-[300px]">
-    <div class="bg-white rounded-2xl p-6 shadow-sm">
-      <h2 class="text-gray-800 text-xl font-semibold">Recent History</h2>
+  <!-- Right Sidebar - Hidden below 1460px -->
+  <div class="w-full lg:w-[300px] hidden 2xl:block">
+    <div class="bg-white rounded-2xl p-4 md:p-6 shadow-sm">
+      <h2 class="text-gray-800 text-lg md:text-xl font-semibold">Recent History</h2>
       <div class="mt-4 space-y-1">
         {{#if incomes.length}}
           {{#each incomes as |income|}}
-            <div class="flex justify-between py-3 border-b border-gray-100">
-              <span class="text-gray-700">{{income.name}}</span>
-              <span class="text-green-500">+${{income.amount}}</span>
-            </div>
+          <div class="flex justify-between py-3 border-b border-gray-100">
+            <span class="text-gray-700">{{income.name}}</span>
+            <span class="text-green-500">+${{income.amount}}</span>
+          </div>
           {{/each}}
         {{/if}}
         {{#if expenses.length}}
           {{#each expenses as |expense|}}
-            <div class="flex justify-between py-3 border-b border-gray-100">
-              <span class="text-gray-700">{{expense.name}}</span>
-              <span class="text-red-500">-${{expense.amount}}</span>
-            </div>
+          <div class="flex justify-between py-3 border-b border-gray-100">
+            <span class="text-gray-700">{{expense.name}}</span>
+            <span class="text-red-500">-${{expense.amount}}</span>
+          </div>
           {{/each}}
         {{/if}}
         {{#if noTransactions}}

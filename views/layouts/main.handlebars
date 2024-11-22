@@ -13,11 +13,15 @@
 
 <body class="bg-gray-50 h-full flex flex-col">
   {{#if logged_in}}
+  <!-- Mobile Menu Button -->
+  <button id="menuToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-indigo-600 text-white">
+    <i class="fas fa-bars"></i>
+  </button>
+
   <!-- Left Sidebar -->
-  <div class="fixed left-0 top-0 w-[280px] h-screen bg-[#f8f7fa] flex flex-col">
+  <div id="sidebar" class="fixed left-0 top-0 w-[280px] h-screen bg-[#f8f7fa] flex flex-col md:translate-x-0 -translate-x-full transition-transform duration-300">
     <div class="px-6 py-6 flex items-center gap-3">
-      <div
-        class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xl font-semibold">
+      <div class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xl font-semibold">
         {{firstChar username}}
       </div>
       <div>
@@ -27,26 +31,22 @@
     </div>
 
     <nav class="flex-1 flex flex-col gap-1">
-      <a href="/"
-        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isDashboard}}bg-[#f0eef6] text-indigo-600{{/if}}">
+      <a href="/" class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isDashboard}}bg-[#f0eef6] text-indigo-600{{/if}}">
         <i class="fas fa-chart-line w-5 text-center"></i>
         <span class="text-sm">Dashboard</span>
       </a>
-      <a href="/income"
-        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isIncome}}bg-[#f0eef6] text-indigo-600{{/if}}">
+      <a href="/income" class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isIncome}}bg-[#f0eef6] text-indigo-600{{/if}}">
         <i class="fas fa-dollar-sign w-5 text-center"></i>
         <span class="text-sm">Income</span>
       </a>
-      <a href="/expenses"
-        class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isExpenses}}bg-[#f0eef6] text-indigo-600{{/if}}">
+      <a href="/expenses" class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors {{#if isExpenses}}bg-[#f0eef6] text-indigo-600{{/if}}">
         <i class="fas fa-receipt w-5 text-center"></i>
         <span class="text-sm">Expenses</span>
       </a>
     </nav>
 
     <div class="border-t border-gray-200 pt-4">
-      <button id="logout"
-        class="w-full flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors">
+      <button id="logout" class="w-full flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-[#f0eef6] hover:text-indigo-600 transition-colors">
         <i class="fas fa-sign-out-alt w-5 text-center"></i>
         <span class="text-sm">Sign Out</span>
       </button>
@@ -54,19 +54,19 @@
   </div>
   {{/if}}
 
-  <main class="{{#if logged_in}}ml-[280px]{{/if}} flex-1">
+  <main class="{{#if logged_in}}md:ml-[280px]{{/if}} flex-1 pt-16 md:pt-0">
     {{{ body }}}
   </main>
 
-  <!-- Footer -->
-  <footer class="{{#if logged_in}}ml-[280px]{{/if}} bg-gray-800 text-white py-4 mt-auto">
-    <div class="container mx-auto text-center">
+  <footer class="{{#if logged_in}}md:ml-[280px]{{/if}} bg-gray-800 text-white py-4 mt-auto">
+    <div class="container mx-auto text-center px-4">
       <p>&copy; {{getCurrentYear}} Tangerine Group. All rights reserved.</p>
     </div>
   </footer>
 
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
+  <script src="/js/mobile-menu.js"></script>
   {{/if}}
 </body>
 
