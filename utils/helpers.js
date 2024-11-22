@@ -1,6 +1,6 @@
 module.exports = {
   format_date: (date) => {
-    return date.toLocaleDateString();
+    return new Date(date).toLocaleDateString();
   },
   firstChar: (str) => {
     if (str && typeof str === 'string') {
@@ -11,7 +11,13 @@ module.exports = {
   eq: (a, b) => {
     return a === b;
   },
+  lt: (a, b) => {
+    return parseFloat(a) < parseFloat(b);
+  },
   format_amount: (amount) => {
-    return parseInt(amount).toLocaleString();
+    return amount.toFixed(2);
+  },
+  getCurrentYear: () => {
+    return new Date().getFullYear();
   }
 };

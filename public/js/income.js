@@ -1,6 +1,3 @@
-<<<<<<< HEAD
- 
-=======
 const incomeFormHandler = async (event) => {
   event.preventDefault();
 
@@ -37,4 +34,3 @@ document
 
 // Set default date to today
 document.querySelector('#income-date').valueAsDate = new Date(); 
->>>>>>> 2a54c434b3fa283d791b5004aba7344b52f394d8
